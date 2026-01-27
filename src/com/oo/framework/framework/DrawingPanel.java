@@ -1,4 +1,4 @@
-package com.oo.framework.view;
+package com.oo.framework.framework;
 
 import javax.swing.*;
 import java.awt.*;
