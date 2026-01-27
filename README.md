@@ -29,77 +29,102 @@ import com.oo.framework.framework.DrawingPanel;
 import com.oo.framework.framework.MyFrame;
 `
 
-### 步骤3：创建游戏对象
+### 步骤3：创建游戏元素集合
 
 `java
-import java.awt.*;
+import java.util.Collection;
+import java.util.concurrent.CopyOnWriteArrayList;
+import com.oo.framework.API.Shape;
 
-public class Player implements Controllable, Shape {
-    private int x, y;
-    private int width = 50, height = 50;
+public class ActorCollection {
+    public static Collection<Shape> shapes = new CopyOnWriteArrayList<>();
+}
+`
 
-    public Player(int x, int y) {
+### 步骤4：创建公共组件类
+
+`java
+import com.oo.framework.framework.DrawingPanel;
+import com.oo.framework.framework.ControlPanel;
+import com.oo.framework.framework.MyFrame;
+
+public class Commons {
+    // 创建画图面板对象，并令它关联游戏元素对象（shapes）
+    public final static DrawingPanel drawingPanel = new DrawingPanel(ActorCollection.shapes);
+
+    // 创建Player对象
+    public static Rect player = new Rect(0, 0, 50, 50);
+
+    // 创建控制面板对象，并令它关联游戏元素对象
+    public final static ControlPanel controlPanel = new ControlPanel(player);
+
+    // 创建框架对象，并令它关联画图面板对象和控制面板对象
+    public final static MyFrame myFrame = new MyFrame(Commons.drawingPanel, Commons.controlPanel);
+}
+`
+
+### 步骤5：创建游戏对象
+
+`java
+import java.awt.Graphics;
+import com.oo.framework.API.Controllable;
+import com.oo.framework.API.Shape;
+
+public class Rect implements Shape, Controllable {
+    private int x, y, w, h;
+
+    {
+        // 自动将对象添加到游戏元素集合中
+        ActorCollection.shapes.add(this);
+    }
+
+    // 构造器
+    public Rect(int x, int y, int w, int h) {
         this.x = x;
         this.y = y;
+        this.w = w;
+        this.h = h;
     }
 
-    @Override
-    public void moveUp() {
-        y -= 10;
-    }
-
-    @Override
-    public void moveDown() {
-        y += 10;
-    }
-
-    @Override
-    public void moveLeft() {
-        x -= 10;
-    }
-
-    @Override
-    public void moveRight() {
-        x += 10;
+    public Rect() {
     }
 
     @Override
     public void drawMyself(Graphics g) {
-        g.setColor(Color.BLUE);
-        g.fillRect(x, y, width, height);
+        g.drawRect(x, y, w, h);
     }
 
-    // Getter methods
-    public int getX() { return x; }
-    public int getY() { return y; }
+    @Override
+    public void moveUp() {
+        this.y -= 5;
+    }
+
+    @Override
+    public void moveDown() {
+        this.y += 5;
+    }
+
+    @Override
+    public void moveLeft() {
+        this.x -= 5;
+    }
+
+    @Override
+    public void moveRight() {
+        this.x += 5;
+    }
 }
 `
 
-### 步骤4：创建游戏窗口
+### 步骤6：创建主类
 
 `java
-import java.util.ArrayList;
-import java.util.List;
-
-public class GameDemo {
+public class Main {
     public static void main(String[] args) {
-        // 创建游戏对象
-        Player player = new Player(100, 100);
-        
-        // 创建形状集合
-        List<Shape> shapes = new ArrayList<>();
-        shapes.add(player);
-        
-        // 创建面板
-        DrawingPanel drawingPanel = new DrawingPanel(shapes);
-        drawingPanel.setPreferredSize(new Dimension(800, 600));
-        
-        ControlPanel controlPanel = new ControlPanel(player);
-        
-        // 创建窗口
-        MyFrame frame = new MyFrame(drawingPanel, controlPanel);
-        frame.pack();
-        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        // 设置框架的大小
+        Commons.myFrame.setSize(1000, 680);
+        // 令框架可见
+        Commons.myFrame.setVisible(true);
     }
 }
 `
