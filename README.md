@@ -21,7 +21,7 @@
 
 ### 步骤2：导入必要的类
 
-`java
+`
 import com.oo.framework.API.Controllable;
 import com.oo.framework.API.Shape;
 import com.oo.framework.framework.ControlPanel;
