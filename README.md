@@ -21,7 +21,7 @@
 
 ### 步骤2：导入必要的类
 
-```
+```java
 import com.oo.framework.API.Controllable;
 import com.oo.framework.API.Shape;
 import com.oo.framework.framework.ControlPanel;
@@ -31,7 +31,7 @@ import com.oo.framework.framework.MyFrame;
 
 ### 步骤3：创建游戏元素集合
 
-`
+```java
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArrayList;
 import com.oo.framework.API.Shape;
@@ -39,11 +39,11 @@ import com.oo.framework.API.Shape;
 public class ActorCollection {
     public static Collection<Shape> shapes = new CopyOnWriteArrayList<>();
 }
-`
+````
 
 ### 步骤4：创建公共组件类
 
-```
+```java
 import com.oo.framework.framework.DrawingPanel;
 import com.oo.framework.framework.ControlPanel;
 import com.oo.framework.framework.MyFrame;
@@ -65,7 +65,7 @@ public class Commons {
 
 ### 步骤5：创建游戏对象
 
-```
+```java
 import java.awt.Graphics;
 import com.oo.framework.API.Controllable;
 import com.oo.framework.API.Shape;
