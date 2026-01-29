@@ -137,106 +137,120 @@ public class Main {
 
 ## 扩展指南
 
-1. **创建更多游戏对象**：创建更多游戏对象并自定义绘制：实现 Shape 接口，重写 drawMyself 方法创建不同形状的游戏对象（如圆形、三角形、精灵图等）。
-2. **添加游戏逻辑**：使用 Helper 类提供的工具方法快速实现重叠检测、集合操作、线程延迟等功能，完成游戏设计。
-```java
-public class Helper {
-    /**
-     * 重叠检测
-     * @param overlapper 参加重叠检测的第1个对象，即主动检测者
-     * @param overlappable 参加重叠检测的第2个对象，即被检测者
-     * @return 两个对象是否重叠
-     */
-    //监测两个对象是否重叠
-    public static boolean overlapCheck(Overlapper overlapper, Overlappable overlappable) {
-        //第一个对象的宽度和高度
-        int w1 = overlapper.getW();
-        int h1 = overlapper.getH();
+# 扩展指南
 
-        //第一个对象的中心点坐标
-        int cx1 = overlapper.getCx();
-        int cy1 = overlapper.getCy();
-
-        //第二个对象的宽度和高度
-        int w2 = overlappable.getW();
-        int h2 = overlappable.getH();
-
-        //第二个对象的中心点坐标
-        int cx2 = overlappable.getCx();
-        int cy2 = overlappable.getCy();
-
-        //双方中心横距
-        int dx = Math.abs(cx1 - cx2);
-
-        //双方中心纵距
-        int dy = Math.abs(cy1 - cy2);
-
-        //在横向是否重叠
-        boolean overlapInX = (w1 + w2)/2 >= dx;
-
-        //在纵向是否重叠
-        boolean overlapInY = (h1 + h2)/2 >= dy;
-
-        //返回是否双向重叠
-        return (overlapInX && overlapInY);
-    }
-
-
-    /**
-     * @param toSearch 要查找的对象
-     * @param searched 在该数组中查找
-     * @return toSearch是否在searched数组中
-     */
-    public static boolean containedInArray(Object toSearch,  Collection<?> searched) {
-        boolean contained = false;
-        for (Object element : searched) {
-            if (toSearch == element) {
-                contained = true;
-            }
-        }
-        return contained;
-    }
-
-    /**
-     * 从多个集合类中删除指定对象
-     * @param collectionCollection 保存集合类对象的集合类对象
-     * @param toRemove 要从多个集合中删除的对象
-     */
-    public static void removeObjectFromCollection2(Collection<Collection> collectionCollection, Object toRemove) {
-        for (Collection collection : collectionCollection) {
-            collection.remove(toRemove);
-        }
-    }
-
-    /**
-     * 将对象添加到多个集合中，并将这些集合记录到一个主集合中
-     * @param collectionCollection 保存集合类对象的主集合
-     * @param toAdd 要添加的对象
-     * @param collections 要添加到的多个集合
-     */
-    public static void addObjectToCollectionCollection(Collection<Collection> collectionCollection, Object toAdd, Collection<?>... collections) {
-        for (Collection<?> collection : collections) {
-            ((Collection<Object>) collection).add(toAdd);
-            collectionCollection.add(collection);
-        }
-    }
-
-    /**
-     * 线程延迟
-     * @param milliseconds 延迟的毫秒数
-     */
-    public static void delay(int milliseconds){
-        try{
-            Thread.sleep(milliseconds);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
-    }
-}
-
-```
+1. **创建更多游戏对象**：实现 Shape 接口，重写 drawMyself 方法创建不同形状的游戏对象（如圆形、三角形、精灵图等）；也可通过`ImgHelper`工具类加载本地图片，在自定义绘制中显示图片，实现游戏精灵、背景图等视觉效果。
+   ```java
+   public class ImgHelper {
+   	/**
+   	 * @param filename 图片文件名（含路径，如"img/player.png"）
+   	 * @return 加载后的Image对象，可直接在drawMyself中绘制
+   	 */
+   	public static Image getImage(String filename) {
+   		ImageIcon imageIcon = new ImageIcon(filename);
+   		Image image = imageIcon.getImage();
+   		return image;		
+   	}	
+   }
+2. **添加游戏逻辑**：使用 `Helper` 类提供的工具方法快速实现重叠检测、集合操作、线程延迟等功能，完成游戏设计。
+   ```java
+   public class Helper {
+       /**
+        * 重叠检测
+        * @param overlapper 参加重叠检测的第1个对象，即主动检测者
+        * @param overlappable 参加重叠检测的第2个对象，即被检测者
+        * @return 两个对象是否重叠
+        */
+       //监测两个对象是否重叠
+       public static boolean overlapCheck(Overlapper overlapper, Overlappable overlappable) {
+           //第一个对象的宽度和高度
+           int w1 = overlapper.getW();
+           int h1 = overlapper.getH();
    
-3. **扩展控制面板功能**：通过继承 ControlPanel 类，重写键盘事件处理方法，实现空格发射和Ctrl+P 键暂停游戏的功能。
+           //第一个对象的中心点坐标
+           int cx1 = overlapper.getCx();
+           int cy1 = overlapper.getCy();
+   
+           //第二个对象的宽度和高度
+           int w2 = overlappable.getW();
+           int h2 = overlappable.getH();
+   
+           //第二个对象的中心点坐标
+           int cx2 = overlappable.getCx();
+           int cy2 = overlappable.getCy();
+   
+           //双方中心横距
+           int dx = Math.abs(cx1 - cx2);
+   
+           //双方中心纵距
+           int dy = Math.abs(cy1 - cy2);
+   
+           //在横向是否重叠
+           boolean overlapInX = (w1 + w2)/2 >= dx;
+   
+           //在纵向是否重叠
+           boolean overlapInY = (h1 + h2)/2 >= dy;
+   
+           //返回是否双向重叠
+           return (overlapInX && overlapInY);
+       }
+   
+   
+       /**
+        * @param toSearch 要查找的对象
+        * @param searched 在该数组中查找
+        * @return toSearch是否在searched数组中
+        */
+       public static boolean containedInArray(Object toSearch,  Collection<?> searched) {
+           boolean contained = false;
+           for (Object element : searched) {
+               if (toSearch == element) {
+                   contained = true;
+               }
+           }
+           return contained;
+       }
+   
+       /**
+        * 从多个集合类中删除指定对象
+        * @param collectionCollection 保存集合类对象的集合类对象
+        * @param toRemove 要从多个集合中删除的对象
+        */
+       public static void removeObjectFromCollection2(Collection<Collection> collectionCollection, Object toRemove) {
+           for (Collection collection : collectionCollection) {
+               collection.remove(toRemove);
+           }
+       }
+   
+       /**
+        * 将对象添加到多个集合中，并将这些集合记录到一个主集合中
+        * @param collectionCollection 保存集合类对象的主集合
+        * @param toAdd 要添加的对象
+        * @param collections 要添加到的多个集合
+        */
+       public static void addObjectToCollectionCollection(Collection<Collection> collectionCollection, Object toAdd, Collection<?>... collections) {
+           for (Collection<?> collection : collections) {
+               ((Collection<Object>) collection).add(toAdd);
+               collectionCollection.add(collection);
+           }
+       }
+   
+       /**
+        * 线程延迟
+        * @param milliseconds 延迟的毫秒数
+        */
+       public static void delay(int milliseconds){
+           try{
+               Thread.sleep(milliseconds);
+           }catch (InterruptedException e){
+               e.printStackTrace();
+           }
+       }
+   }
+   
+   ```
+   
+3. **扩展控制面板功能**：通过继承 `ControlPanel` 类，重写键盘事件处理方法，实现空格发射和 Ctrl+P 键暂停游戏的功能。
 4. **多线程进阶功能**：加入多线程实现游戏计时、自动发射、敌人 AI 等动态效果，让游戏体验更流畅。
 
 ## 技术说明
