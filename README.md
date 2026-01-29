@@ -152,7 +152,16 @@ public class Main {
    		return image;		
    	}	
    }
-2. **添加游戏逻辑**：使用 `Helper` 类提供的工具方法快速实现重叠检测、集合操作、线程延迟等功能，完成游戏设计。
+   ```
+   *以绘制游戏背景图片为例，直接在重写的`drawMyself`方法中，调用`ImgHelper.getImage()`获取图片，配合`g.drawImage()`绘制，可实现游戏背景效果：*
+   ```java
+      @Override
+      public void drawMyself(Graphics g) {
+          // 直接调用ImgHelper加载图片，传入图片路径（项目根目录下的img文件夹）
+          // g.drawImage(图片对象, 绘制x坐标, 绘制y坐标, 图片宽度, 图片高度, 空值);
+          g.drawImage(ImgHelper.getImage("img/bg.png"),0,-12,1159,912,null);
+      }
+3. **添加游戏逻辑**：使用 `Helper` 类提供的工具方法快速实现重叠检测、集合操作、线程延迟等功能，完成游戏设计。
    ```java
    public class Helper {
        /**
@@ -250,8 +259,8 @@ public class Main {
    
    ```
    
-3. **扩展控制面板功能**：通过继承 `ControlPanel` 类，重写键盘事件处理方法，实现空格发射和 Ctrl+P 键暂停游戏的功能。
-4. **多线程进阶功能**：加入多线程实现游戏计时、自动发射、敌人 AI 等动态效果，让游戏体验更流畅。
+4. **扩展控制面板功能**：通过继承 `ControlPanel` 类，重写键盘事件处理方法，实现空格发射和 Ctrl+P 键暂停游戏的功能。
+5. **多线程进阶功能**：加入多线程实现游戏计时、自动发射、敌人 AI 等动态效果，让游戏体验更流畅。
 
 ## 技术说明
 
