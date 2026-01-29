@@ -118,7 +118,7 @@ public class Rect implements Shape, Controllable {
 
 ### 步骤6：创建主类
 
-```
+```java
 public class Main {
     public static void main(String[] args) {
         // 设置框架的大小
