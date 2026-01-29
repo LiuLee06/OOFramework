@@ -21,13 +21,13 @@
 
 ### 步骤2：导入必要的类
 
-`
+```
 import com.oo.framework.API.Controllable;
 import com.oo.framework.API.Shape;
 import com.oo.framework.framework.ControlPanel;
 import com.oo.framework.framework.DrawingPanel;
 import com.oo.framework.framework.MyFrame;
-`
+````
 
 ### 步骤3：创建游戏元素集合
 
@@ -43,7 +43,7 @@ public class ActorCollection {
 
 ### 步骤4：创建公共组件类
 
-`
+```
 import com.oo.framework.framework.DrawingPanel;
 import com.oo.framework.framework.ControlPanel;
 import com.oo.framework.framework.MyFrame;
@@ -61,11 +61,11 @@ public class Commons {
     // 创建框架对象，并令它关联画图面板对象和控制面板对象
     public final static MyFrame myFrame = new MyFrame(Commons.drawingPanel, Commons.controlPanel);
 }
-`
+```
 
 ### 步骤5：创建游戏对象
 
-`
+```
 import java.awt.Graphics;
 import com.oo.framework.API.Controllable;
 import com.oo.framework.API.Shape;
@@ -114,11 +114,11 @@ public class Rect implements Shape, Controllable {
         this.x += 5;
     }
 }
-`
+````
 
 ### 步骤6：创建主类
 
-`
+```
 public class Main {
     public static void main(String[] args) {
         // 设置框架的大小
@@ -127,7 +127,7 @@ public class Main {
         Commons.myFrame.setVisible(true);
     }
 }
-`
+```
 
 ## 控制方式
 
