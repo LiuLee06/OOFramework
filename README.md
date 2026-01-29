@@ -16,7 +16,7 @@
 
 1. 下载 OOFramework.jar 文件
 2. 在IDE中添加该JAR作为项目依赖：
-   - **IntelliJ IDEA**：File -> Project Structure -> Libraries -> + -> Java
+   - **IntelliJ IDEA**：File → Project Structure → Libraries → + → Java
    - **Eclipse**：右键项目 → Build Path → Add External Archives
 
 ### 步骤2：导入必要的类
